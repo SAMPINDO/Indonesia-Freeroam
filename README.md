@@ -34,6 +34,7 @@ Tiap module memiliki beberapa file yang dipisah sesuai fungsi:
 | ------ | ------ | ------ |
 | SA:MP MySQL Plugin | R41+ | https://github.com/pBlueG/SA-MP-MySQL/releases |
 | Sscanf2 | 2.13.2 | https://github.com/Y-Less/sscanf/releases |
+| Streamer | 2.9.5 | https://github.com/samp-incognito/samp-streamer-plugin/releases |
 | Bcrypt | 3.4 | https://github.com/Sreyas-Sreelal/samp-bcrypt/releases |
 | YSI | 5+ | https://github.com/pawn-lang/YSI-Includes/releases |
 | easyDialog | 2.0 | https://github.com/Awsomedude/easyDialog/releases |
@@ -42,5 +43,5 @@ Tiap module memiliki beberapa file yang dipisah sesuai fungsi:
 ## Installation
 Simply install to your project:
 ```bash
-sampctl package install Lukman350/RRP
+sampctl package install https://github.com/SAMPINDO/Indonesia-Freeroam
 ```
