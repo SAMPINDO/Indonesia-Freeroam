@@ -77,7 +77,7 @@ function OnPassswordHash(playerid)
 	bcrypt_get_hash(dest);
 	CreatePlayerORM(playerid);
 	GetPlayerName(playerid,PlayerInfo[playerid][Name],MAX_PLAYER_NAME);
-	strcmp(PlayerInfo[playerid][Password], dest);
+	PlayerInfo[playerid][Password] = dest;
 	PlayerInfo[playerid][RegisterDate] = gettime();
 	PlayerInfo[playerid][LastLoginDate] = 0;
 	PlayerInfo[playerid][Playtime] = 0;
