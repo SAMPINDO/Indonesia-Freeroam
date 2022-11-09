@@ -1,5 +1,5 @@
-# Relived Roleplay
-[![sampctl](https://img.shields.io/badge/SAMPCTL-Indonesia--Freeroam-2f2f2f.svg?style=for-the-badge)](https://github.com/Lukman350/RRP)
+# Indonesia Freeroam
+[![sampctl](https://img.shields.io/badge/SAMPCTL-Indonesia--Freeroam-2f2f2f.svg?style=for-the-badge)](https://github.com/SAMPINDO/Indonesia-Freeroam)
 
 ## About
 
