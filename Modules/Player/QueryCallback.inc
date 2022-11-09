@@ -62,3 +62,33 @@ function Player_Register(playerid,check)
 	}
 	return 1;
 }
+
+
+function OnPassswordCheck(playerid)
+{
+	new dest[BCRYPT_HASH_LENGTH];
+	bcrypt_get_hash(dest);
+	return !(strcmp(PlayerInfo[playerid][Password],dest,true));
+}
+
+function OnPassswordHash(playerid)
+{
+	new dest[BCRYPT_HASH_LENGTH];
+	bcrypt_get_hash(dest);
+	CreatePlayerORM(playerid);
+	GetPlayerName(playerid,PlayerInfo[playerid][Name],MAX_PLAYER_NAME);
+	strcmp(PlayerInfo[playerid][Password], dest);
+	PlayerInfo[playerid][RegisterDate] = gettime();
+	PlayerInfo[playerid][LastLoginDate] = 0;
+	PlayerInfo[playerid][Playtime] = 0;
+	PlayerInfo[playerid][Skin] = 299;
+	PlayerInfo[playerid][Pos][0] = 1956.2833;
+	PlayerInfo[playerid][Pos][1] = 1342.9930;
+	PlayerInfo[playerid][Pos][2] = 15.3746;
+	PlayerInfo[playerid][Pos][3] = 270.1634;
+	PlayerInfo[playerid][Kills] = 0;
+	PlayerInfo[playerid][Deaths] = 0;
+	orm_setkey(PlayerInfo[playerid][ORM_ID],"id");
+	orm_insert(PlayerInfo[playerid][ORM_ID],"Player_Register","dd",playerid,RaceCheck[playerid]);
+	return 1;
+}

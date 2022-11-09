@@ -1,15 +1,17 @@
-# Jogjagamers Freeroam
+# Relived Roleplay
+[![sampctl](https://img.shields.io/badge/SAMPCTL-Indonesia--Freeroam-2f2f2f.svg?style=for-the-badge)](https://github.com/Lukman350/RRP)
 
-### About
+## About
 
-Jogjagamers Freeroam adalah gamemode SA:MP, fitur utama yang ditawarkan oleh gamemode ini adalah:
+Indonesia Freeroam adalah gamemode SA:MP, fitur utama yang ditawarkan oleh gamemode ini adalah:
 
   - Gamemode yang terpisah berdasarkan module
   - Player Registration and Login system using MySQL plugin R41+
+  - YSI Library 5+
   - Per player vehicle spawning and ownership
   - Other fun commands
 
-### Modules
+## Modules
 
 Gamemode ini menyediakan 3 module yaitu:
 
@@ -26,38 +28,19 @@ Tiap module memiliki beberapa file yang dipisah sesuai fungsi:
   - Dialog.inc (berisi callback dialog menggunakan easyDialog)
   - Command.inc (berisi command menggunakan YCMD)
 
-### Dependencies
+## Dependencies
 
 | Name | Version | URL |
 | ------ | ------ | ------ |
 | SA:MP MySQL Plugin | R41+ | https://github.com/pBlueG/SA-MP-MySQL/releases |
-| Sscanf2 | 2.8.2 | https://github.com/maddinat0r/sscanf/releases |
-| Whirlpool | 1.0 | https://github.com/Southclaws/samp-whirlpool |
-| YSI | 4+ | https://github.com/Misiur/YSI-Includes/releases |
+| Sscanf2 | 2.13.2 | https://github.com/Y-Less/sscanf/releases |
+| Bcrypt | 3.4 | https://github.com/Sreyas-Sreelal/samp-bcrypt/releases |
+| YSI | 5+ | https://github.com/pawn-lang/YSI-Includes/releases |
 | easyDialog | 2.0 | https://github.com/Awsomedude/easyDialog/releases |
 
-### Installation
 
-1. Compile script dengan semua dependencies yang dibutuhkan menggunakan SA:MP versi 0.3.7 R2
-2. Ubah file mysql.ini sesuai konfigurasi server MySQL / MariaDB kamu
-3. Buat table baru dengan query berikut:
-
-```sql
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '',
-  `password` varchar(130) NOT NULL DEFAULT '',
-  `register_date` int(11) NOT NULL DEFAULT 0,
-  `last_login_date` int(11) NOT NULL DEFAULT 0,
-  `playtime` int(11) NOT NULL DEFAULT 0,
-  `skin` int(11) NOT NULL DEFAULT 299,
-  `pos_x` float(12,4) NOT NULL DEFAULT 0.0000,
-  `pos_y` float(12,4) NOT NULL DEFAULT 0.0000,
-  `pos_z` float(12,4) NOT NULL DEFAULT 3.0000,
-  `pos_a` float(12,4) NOT NULL DEFAULT 0.0000,
-  `kills` int(11) NOT NULL DEFAULT 0,
-  `deaths` int(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+## Installation
+Simply install to your project:
+```bash
+sampctl package install Lukman350/RRP
 ```
-4. Setelah itu jalankan SA:MP server kamu

@@ -1,6 +1,6 @@
 stock ORM:CreatePlayerORM(playerid)
 {
-	new ORM:ormid = PlayerInfo[playerid][ORM_ID] = orm_create("users",Database);
+	new ORM:ormid = PlayerInfo[playerid][ORM_ID] = orm_create("players",Database);
 	orm_addvar_int(ormid,PlayerInfo[playerid][ID],"id");
 	orm_addvar_string(ormid,PlayerInfo[playerid][Name],32,"name");
 	orm_addvar_string(ormid,PlayerInfo[playerid][Password],130,"password");
@@ -20,7 +20,7 @@ stock LoadPlayer(playerid)
 {
 	new playername[MAX_PLAYER_NAME],string[128];
 	GetPlayerName(playerid,playername,sizeof(playername));
-	mysql_format(Database,string,sizeof(string),"SELECT * FROM `users` WHERE `name`='%e'",playername);
+	mysql_format(Database,string,sizeof(string),"SELECT * FROM `players` WHERE `name`='%e'",playername);
 	mysql_pquery(Database,string,"Player_LoadData","dd",playerid,RaceCheck[playerid]);
 	// new ORM:ormid = CreatePlayerORM(playerid);
 	// GetPlayerName(playerid,PlayerInfo[playerid][Name],MAX_PLAYER_NAME);
@@ -44,29 +44,17 @@ stock ShowRegisterDialog(playerid)
 }
 stock bool:LoginPlayer(playerid,const password[])
 {
-	if(IsNull(password)) return false;
-	new hashed[130];
-	WP_Hash(hashed,129,password);
-	return !(strcmp(PlayerInfo[playerid][Password],hashed,true));
+	if(IsNull(password)) 
+		return false;
+
+	bcrypt_hash(playerid,"OnPassswordCheck",password,BCRYPT_COST);
+	return true;
 }
+
 stock RegisterPlayer(playerid,const password[])
 {
 	if(IsNull(password)) return 0;
-	CreatePlayerORM(playerid);
-	GetPlayerName(playerid,PlayerInfo[playerid][Name],MAX_PLAYER_NAME);
-	WP_Hash(PlayerInfo[playerid][Password],129,password);
-	PlayerInfo[playerid][RegisterDate] = gettime();
-	PlayerInfo[playerid][LastLoginDate] = 0;
-	PlayerInfo[playerid][Playtime] = 0;
-	PlayerInfo[playerid][Skin] = 299;
-	PlayerInfo[playerid][Pos][0] = 1956.2833;
-	PlayerInfo[playerid][Pos][1] = 1342.9930;
-	PlayerInfo[playerid][Pos][2] = 15.3746;
-	PlayerInfo[playerid][Pos][3] = 270.1634;
-	PlayerInfo[playerid][Kills] = 0;
-	PlayerInfo[playerid][Deaths] = 0;
-	orm_setkey(PlayerInfo[playerid][ORM_ID],"id");
-	orm_insert(PlayerInfo[playerid][ORM_ID],"Player_Register","dd",playerid,RaceCheck[playerid]);
+	bcrypt_hash(playerid,"OnPassswordHash",password,BCRYPT_COST);
 	return 1;
 }
 stock bool:IsPlayerLoggedIn(playerid)

@@ -1,1 +1,48 @@
+#
+# Package only files
+#
+
+# Compiled Bytecode, precompiled output and assembly
 *.amx
+*.lst
+*.asm
+
+# Vendor directory for dependencies
+dependencies/
+
+#
+# Server/gamemode related files
+#
+
+# compiled settings file
+# keep `samp.json` file on version control
+# but make sure the `rcon_password` field is set externally
+# you can use the environment variable `SAMP_RCON_PASSWORD` to do this.
+server.cfg
+
+# Plugins directory
+plugins/
+
+# Pawno
+pawno/
+
+# binaries
+*.exe
+*.so
+announce
+samp03svr
+samp-npc
+
+# logs
+logs/
+server_log.txt
+crashinfo.txt
+
+#
+# Common files
+#
+
+filterscripts/
+*.amx
+log-core.dll
+libmariadb.dll

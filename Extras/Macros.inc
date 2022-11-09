@@ -4,9 +4,7 @@
     for(new i; %0[i] != EOS; ++i) \
         %0[i] = ('A' <= %0[i] <= 'Z') ? (%0[i] += 'a' - 'A') : (%0[i])
 #define IsOdd(%0)  ((%0)&1)
-#define IsEven(%0) (!IsOdd(%0))
 #define SEM(%0,%1) SendClientMessage(%0,0xBFC0C200,%1)
-#define IsNull(%1) ((!(%1[0])) || (((%1[0]) == '\1') && (!(%1[1]))))
 #define Pressed(%0) ((newkeys & %0) && !(oldkeys & %0))
 #define Holding(%0) ((newkeys & (%0)) == (%0))
 #define Released(%0) (((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
