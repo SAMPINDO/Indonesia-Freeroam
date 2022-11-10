@@ -1,0 +1,9 @@
+new MySQL:g_Database;
+
+enum
+{
+	DIALOG_UNUSED,
+
+	DIALOG_LOGIN,
+	DIALOG_REGISTER
+};
