@@ -1,6 +1,6 @@
 # Indonesia-Freeroam
 
-Indonesia Freeroam Gamemode build by scratch
+Indonesia Freeroam Gamemode build on scratch(bare)
 
 
 
