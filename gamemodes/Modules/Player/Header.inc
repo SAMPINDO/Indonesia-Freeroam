@@ -7,7 +7,12 @@ enum E_PLAYERS
 	pPassword[250], // Password is bcrypt hash with 250 Max
 	pKills,
 	pDeaths,
+	pRegisterDate,
+	pLastLoginDate,
+	pPlaytime,
+	pSkin,
 
+	// Unsave
 	bool: pIsLoggedIn,
 	pLoginAttempts,
 	pLoginTimer

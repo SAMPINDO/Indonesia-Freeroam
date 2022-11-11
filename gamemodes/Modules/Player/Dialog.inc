@@ -4,10 +4,10 @@ Dialog:Player_Login(playerid,response,listitem,inputtext[])
 	{
 		if(LoginPlayer(playerid,inputtext))
 		{
-			SetSpawnInfo(playerid,-1,PlayerInfo[playerid][Skin],PlayerInfo[playerid][Pos][0],PlayerInfo[playerid][Pos][1],PlayerInfo[playerid][Pos][2],PlayerInfo[playerid][Pos][3],0,0,0,0,0,0);
+			SetSpawnInfo(playerid,-1,0,0,0,0,0,0,0,0,0,0,0);
 			TogglePlayerSpectating(playerid,0);
-			PlayerInfo[playerid][LastLoginDate] = gettime();
-			PlayerLogged[playerid] = true;
+			PlayerData[playerid][pLastLoginDate] = gettime();
+			PlayerData[playerid][pIsLoggedIn] = true;
 		}
 		else
 		{

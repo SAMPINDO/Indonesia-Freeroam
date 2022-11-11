@@ -48,3 +48,6 @@ samp.ban
 #
 
 *.sublime-workspace
+
+# Database Connection
+mysql.ini

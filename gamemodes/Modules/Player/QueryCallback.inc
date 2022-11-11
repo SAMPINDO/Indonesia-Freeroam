@@ -9,15 +9,15 @@ function OnPlayerDataLoaded(playerid, race_check)
 	{
 		case ERROR_OK:
 		{
-			format(string, sizeof string, "This account (%s) is registered. Please login by entering your password in the field below:", Player[playerid][Name]);
-			Dialog_Show(playerid,Player_Login,DIALOG_STYLE_PASSWORD,"Login to "SERVER_NAME_SHORT,WHITE"User: "YELLOW"%s\n"WHITE"Login Attempts: "YELLOW"%d / 5\n"WHITE"Password: "GREEN"(input below)","Login","Quit",playername,GetPVarInt(playerid,"LoginAttempt"));
+			format(string, sizeof string, "This account (%s) is registered. Please login by entering your password in the field below:", PlayerData[playerid][pName]);
+			Dialog_Show(playerid,Player_Login,DIALOG_STYLE_PASSWORD,"Login to "SERVER_NAME_SHORT,WHITE"User: "YELLOW"%s\n"WHITE"Login Attempts: "YELLOW"%d / 5\n"WHITE"Password: "GREEN"(input below)","Login","Quit",PlayerData[playerid][pName],GetPVarInt(playerid,"LoginAttempt"));
 
 			// from now on, the player has 30 seconds to login
 			PlayerData[playerid][pLoginTimer] = SetTimerEx("OnLoginTimeout", 30, false, "d", playerid);
 		}
 		case ERROR_NO_DATA:
 		{
-			format(string, sizeof string, "Welcome %s, you can register by entering your password in the field below:", Player[playerid][Name]);
+			format(string, sizeof string, "Welcome %s, you can register by entering your password in the field below:", PlayerData[playerid][pName]);
 			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Registration", string, "Register", "Abort");
 		}
 	}
@@ -40,7 +40,7 @@ function OnPlayerRegister(playerid)
 
 	PlayerData[playerid][pIsLoggedIn] = true;
 
-	SetSpawnInfo(playerid, NO_TEAM, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	SetSpawnInfo(playerid, NO_TEAM, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	SpawnPlayer(playerid);
 	return 1;
 }
@@ -49,17 +49,16 @@ function OnPassswordHash(playerid)
 {
 	new dest[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(dest);
-	CreatePlayerORM(playerid);
-	GetPlayerName(playerid,PlayerInfo[playerid][pName],MAX_PLAYER_NAME);
-	PlayerInfo[playerid][pPassword] = dest;
-	PlayerInfo[playerid][pRegisterDate] = gettime();
-	PlayerInfo[playerid][pLastLoginDate] = 0;
-	PlayerInfo[playerid][Playtime] = 0;
-	PlayerInfo[playerid][pSkin] = 299;
-	PlayerInfo[playerid][pKills] = 0;
-	PlayerInfo[playerid][pDeaths] = 0;
-	orm_setkey(PlayerInfo[playerid][ORM_ID],"id");
-	orm_save(PlayerInfo[playerid][ORM_ID]);
+	GetPlayerName(playerid,PlayerData[playerid][pName],MAX_PLAYER_NAME);
+	format(PlayerData[playerid][pPassword], BCRYPT_HASH_LENGTH, "%s", dest);
+	PlayerData[playerid][pRegisterDate] = gettime();
+	PlayerData[playerid][pLastLoginDate] = 0;
+	PlayerData[playerid][pPlaytime] = 0;
+	PlayerData[playerid][pSkin] = 299;
+	PlayerData[playerid][pKills] = 0;
+	PlayerData[playerid][pDeaths] = 0;
+	orm_setkey(PlayerData[playerid][ORM_ID],"id");
+	orm_save(PlayerData[playerid][ORM_ID]);
 	return 1;
 }
 
@@ -67,5 +66,5 @@ function OnPassswordCheck(playerid)
 {
 	new dest[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(dest);
-	return !(strcmp(PlayerInfo[playerid][Password],dest,true));
+	return !(strcmp(PlayerData[playerid][pPassword],dest,true));
 }

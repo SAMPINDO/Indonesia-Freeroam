@@ -50,7 +50,7 @@ public OnGameModeInit()
 		return 1;
     }
 
-	SetGameModeText(SERVER_NAME_SHORT" v"MODE_VERSION);
+	SetGameModeText(MODE_VERSION);
 	AddPlayerClass(299,1956.2833,1342.9930,15.3746,270.1634,0,0,0,0,0,0);
     UsePlayerPedAnims();
 	return 1;
@@ -58,15 +58,14 @@ public OnGameModeInit()
 
 public OnPlayerText(playerid, text[])
 {
-	
- 	return 0;
+ 	return 1;
 }
 
 public OnGameModeExit()
 {
 	if(g_Database != MYSQL_INVALID_HANDLE)
 	{
-		//SavePlayers(); // Save Player Data When Database Is Connected and Server Is Shutting Down
+		SavePlayers(); // Save Player Data When Database Is Connected and Server Is Shutting Down
 	}
 	mysql_close(g_Database);
 	return 1;

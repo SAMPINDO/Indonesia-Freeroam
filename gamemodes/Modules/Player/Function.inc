@@ -1,12 +1,11 @@
 stock ORM:CreateORM(playerid)
 {
     new ORM: ormid = orm_create("players", g_Database);
-    orm_addvar_int(ormid, Player[playerid][pID], "id");
-	orm_addvar_string(ormid, Player[playerid][pName], MAX_PLAYER_NAME, "username");
-	orm_addvar_string(ormid, Player[playerid][pPassword], 65, "password");
-	orm_addvar_string(ormid, Player[playerid][pSalt], 17, "salt");
-	orm_addvar_int(ormid, Player[playerid][pKills], "kills");
-	orm_addvar_int(ormid, Player[playerid][pDeaths], "deaths");
+    orm_addvar_int(ormid, PlayerData[playerid][pID], "id");
+	orm_addvar_string(ormid, PlayerData[playerid][pName], MAX_PLAYER_NAME, "username");
+	orm_addvar_string(ormid, PlayerData[playerid][pPassword], 65, "password");
+	orm_addvar_int(ormid, PlayerData[playerid][pKills], "kills");
+	orm_addvar_int(ormid, PlayerData[playerid][pDeaths], "deaths");
 
 	orm_setkey(ormid, "username");
     return ormid;
@@ -59,17 +58,24 @@ stock bool:IsPlayerLoggedIn(playerid)
 }
 stock SavePlayer(playerid)
 {
-	GetPlayerPos(playerid,PlayerInfo[playerid][Pos][0],PlayerInfo[playerid][Pos][1],PlayerInfo[playerid][Pos][2]);
-	GetPlayerFacingAngle(playerid,PlayerInfo[playerid][Pos][3]);
-	PlayerInfo[playerid][Skin] = GetPlayerSkin(playerid);
-	orm_update(PlayerInfo[playerid][ORM_ID]);
+	PlayerData[playerid][pSkin] = GetPlayerSkin(playerid);
+	orm_update(PlayerData[playerid][ORM_ID]);
 	return 1;
 }
 stock SavePlayers()
 {
 	foreach(new playerid : Player)
 	{
-		if(PlayerLogged[playerid]) SavePlayer(playerid);
+		if(PlayerData[playerid][pIsLoggedIn]) SavePlayer(playerid);
 	}
+	return 1;
+}
+UpdatePlayerData(playerid)
+{
+	if (PlayerData[playerid][pIsLoggedIn] == false) return 0;
+
+	// orm_save sends an UPDATE query
+	orm_save(PlayerData[playerid][ORM_ID]);
+	orm_destroy(PlayerData[playerid][ORM_ID]);
 	return 1;
 }
