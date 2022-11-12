@@ -22,12 +22,13 @@ jobs:
     - name: Install i386 deps
       run: |
         sudo dpkg --add-architecture i386 
-        sudo apt-get update 
+        sudo apt-get update
         sudo apt-get install g++-multilib -y
     - uses: actions/checkout@v2
     - name: Check server
       run: |
         sampctl package ensure
+        sampctl package build
         sampctl package run
   build_server_centos:
     runs-on: ubuntu-latest
@@ -35,7 +36,7 @@ jobs:
 
     steps:
     - name: Install i386 deps
-      run: yum install git curl gcc g++ dpkg-dev make libgcc libgcc.i686 glibc-devel.i686 zlib.i686 zlib -y
+      run: yum install git curl gcc g++ dpkg-dev make libgcc libgcc.i686 glibc-devel.i686 zlib.i686 zlib wget -y
 
     - name: Install SAMPCTL
       run: |
@@ -45,6 +46,7 @@ jobs:
     - name: Check server
       run: |
         sampctl package ensure
+        sampctl package build
         sampctl package run
   build_server_debian:
     runs-on: ubuntu-latest
@@ -58,14 +60,16 @@ jobs:
     - name: Install i386 deps
       run: |
         dpkg --add-architecture i386 
-        apt-get update 
+        apt-get update
+        sampctl package build
         apt-get install g++-multilib curl -y
     
     - name: Install SAMPCTL
       run: |
-        curl https://raw.githubusercontent.com/Southclaws/sampctl/master/install-deb.sh | sh
+        curl https://raw.githubusercontent.com/SAMPINDO/SAMPCTL-GitAction/main/install-deb.sh | sh
     - uses: actions/checkout@v2
     - name: Check server
       run: |
         sampctl package ensure
+        sampctl package build
         sampctl package run
