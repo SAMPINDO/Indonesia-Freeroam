@@ -39,7 +39,6 @@ UniqueVehicles
 
 stock ShowVehicleTypeDialog(playerid)
 {
-    SendClientMessage(playerid, -1, "ShowVehicleTypeDialog called");
     inline Response(pid, dialogid, response, listitem, string:inputtext[])
     {
 	    #pragma unused dialogid, inputtext, pid
