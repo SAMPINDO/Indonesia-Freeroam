@@ -15,10 +15,12 @@
 #include <YSI_Coding\y_timers>
 #include <YSI_Visual\y_commands>
 #include <YSI_Server\y_colors>
+#include <YSI_Coding\y_va>
 #include <YSI_Visual\y_dialog>
 // Include for `inline`.
 #include <YSI_Coding\y_inline>
 
+#include <scg>
 #include <easyDialog>
 #include <mSelection>
 
@@ -26,7 +28,7 @@
 
 #include "Modules/Wrapper"
 
-main() { } // Pake gamemodeinit aja
+main() { Command_SetDeniedReturn(true); } // Pake gamemodeinit aja
 
 public OnGameModeInit() 
 {
@@ -119,9 +121,30 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     return 1;
 }
 
+public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_ERRORS:success) 
+{
+    if (success == COMMAND_UNDEFINED) 
+    {
+        new 
+            guessCmd[32], 
+            dist = Command_Guess(guessCmd, cmdtext);
+  
+        if (dist < 3)
+        {
+            SendClientMessageEx(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!, apakah \"%s\"?", cmdtext, guessCmd);
+        }
+        else
+        {
+            SendClientMessageEx(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!", cmdtext);
+        }
+        return COMMAND_DENIED;
+    }
+    return COMMAND_OK;
+}
+
 // Commands
 
-CMD:help(playerid,params[])
+YCMD:help(playerid,params[],help)
 {
 	SendClientMessage(playerid,X11_LIGHTBLUE,"**HELP** "WHITE"/help /weap /godmode /skin /killme /mycolor /jumpmode /jetpack /notele");
 	SendClientMessage(playerid,X11_LIGHTBLUE,"**VEHICLE** "WHITE"/veh /mv /vehgodmode /vcolor /fix /boostmode /flip /lock /tow");
