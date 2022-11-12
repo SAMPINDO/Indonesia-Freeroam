@@ -1,16 +1,16 @@
 stock SpawnVehicle(playerid, modelid)
 {
     new Float:x, Float:y, Float:z, Float:a;
-	if(IsPlayerInAnyVehicle(playerid))
-	{
-		GetVehiclePos(GetPlayerVehicleID(playerid), x, y, z);
-		GetVehicleZAngle(GetPlayerVehicleID(playerid), a);
-	}
-	else
-	{
-		GetPlayerPos(playerid, x, y, z);
-		GetPlayerFacingAngle(playerid, a);
-	}
+    if(IsPlayerInAnyVehicle(playerid))
+    {
+        GetVehiclePos(GetPlayerVehicleID(playerid), x, y, z);
+        GetVehicleZAngle(GetPlayerVehicleID(playerid), a);
+    }
+    else
+    {
+        GetPlayerPos(playerid, x, y, z);
+        GetPlayerFacingAngle(playerid, a);
+    }
     if(PlayerData[playerid][pLastSpawnedVehicle] != INVALID_VEHICLE_ID)
     {
         DestroyVehicle(PlayerData[playerid][pLastSpawnedVehicle]); // Destroy the last spawned vehicle
