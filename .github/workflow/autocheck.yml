@@ -1,0 +1,33 @@
+name: Auto Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build_server_debian:
+    runs-on: ubuntu-latest
+    container: debian:${{ matrix.os }}
+    strategy:
+      matrix:
+        os: 11
+
+    steps:
+
+    - name: Install i386 deps
+      run: |
+        dpkg --add-architecture i386 
+        apt-get update 
+        apt-get install g++-multilib curl -y
+    
+    - name: Install SAMPCTL
+      run: |
+        curl https://raw.githubusercontent.com/Southclaws/sampctl/master/install-deb.sh | sh
+    - uses: actions/checkout@v2
+    - name: Check server
+      run: |
+        sampctl package ensure
+        sampctl package run
