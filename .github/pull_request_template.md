@@ -12,6 +12,7 @@
 
 ## Changes
 <!-- - Buat catatan apa saja yang sudah anda buat disini -->
+<!-- - Wajib menyertakan Command, Function, CallbackSAMP, QuerryCallback -->
 
 
 ## Checklist
