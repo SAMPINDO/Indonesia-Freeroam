@@ -1,3 +1,4 @@
+#include <YSI_Coding\y_hooks> // Always Create new HOOKING!
 hook OnPlayerConnect(playerid)
 {
     g_MysqlRaceCheck[playerid]++;
@@ -15,6 +16,7 @@ hook OnPlayerConnect(playerid)
     return 1;
 }
 
+#include <YSI_Coding\y_hooks> // Always Create new HOOKING!
 hook OnPlayerDisconnect(playerid, reason)
 {
     g_MysqlRaceCheck[playerid]++;
