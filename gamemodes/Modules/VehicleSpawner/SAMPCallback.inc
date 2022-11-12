@@ -22,7 +22,20 @@ hook OnGameModeInit()
 #include <YSI_Coding\y_hooks> // Always Create new HOOKING!
 hook OnPlayerModelSelection(playerid, response, listid, modelid)
 {
-    if(listid == Boats || listid == Bikes || listid == OffRoad || listid == Saloons || listid == Trailers || listid == Lowriders || listid == Helicopters || listid == Airplanes || listid == Industrial || listid == RCVehicles || listid == Helicopters || listid == PublicService || listid == SportsVehicles || listid == UniqueVehicles)
+    if(listid == Boats
+     || listid == Bikes
+     || listid == OffRoad
+     || listid == Saloons
+     || listid == Trailers
+     || listid == Lowriders
+     || listid == Helicopters
+     || listid == Airplanes
+     || listid == Industrial
+     || listid == RCVehicles
+     || listid == Helicopters
+     || listid == PublicService
+     || listid == SportsVehicles
+     || listid == UniqueVehicles)
         if(response)
             SpawnVehicle(playerid, modelid);
     
