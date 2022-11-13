@@ -15,7 +15,8 @@ enum E_PLAYERS
 	// Unsave
 	bool: pIsLoggedIn,
 	pLoginAttempts,
-	pLoginTimer
+	pLoginTimer,
+	pLastSpawnedVehicle
 };
 new PlayerData[MAX_PLAYERS][E_PLAYERS];
 

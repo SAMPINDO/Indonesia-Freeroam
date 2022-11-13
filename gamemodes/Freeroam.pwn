@@ -9,25 +9,20 @@
 #include <a_samp>
 #include <sscanf2>
 #include <samp_bcrypt>
-#if !defined BCRYPT_HASH_LENGTH
-	#define BCRYPT_HASH_LENGTH 250
-#endif
-
-#if !defined BCRYPT_COST
-	#define BCRYPT_COST 12
-#endif
 #include <a_mysql>
 
 #include <YSI_Data\y_iterate>
 #include <YSI_Coding\y_timers>
 #include <YSI_Visual\y_commands>
 #include <YSI_Server\y_colors>
-#include <YSI_Coding\y_hooks>
 #include <YSI_Coding\y_va>
+#include <YSI_Visual\y_dialog>
+// Include for `inline`.
+#include <YSI_Coding\y_inline>
 
 #include <scg>
 #include <easyDialog>
-#include <eSelection>
+#include <mSelection>
 
 #include "Utils/Macro"
 
@@ -51,9 +46,13 @@ public OnGameModeInit()
 		return 1;
     }
 
-	SetGameModeText(MODE_VERSION);
+	ShowNameTags(1);
+	UsePlayerPedAnims();
+	DisableInteriorEnterExits();
+	SetNameTagDrawDistance(40.0);
+	EnableStuntBonusForAll(false);
+
 	AddPlayerClass(299,1956.2833,1342.9930,15.3746,270.1634,0,0,0,0,0,0);
-    UsePlayerPedAnims();
 	return 1;
 }
 
