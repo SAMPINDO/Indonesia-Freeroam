@@ -11,4 +11,8 @@
 #define IsValidComponent(%0) (1194 > (%0) >= 1000)
 #define IsValidSkin(%0) (311 >= (%0) > 0)
 #define function%0(%1) \
-        forward%0(%1); public%0(%1)
+    forward%0(%1); public%0(%1)
+
+#define PLAYER_IS_NOT_NPC(%0,%1)       if(IsPlayerNPC(%0)) return %1
+#define PLAYER_MUST_CONNECTED(%0,%1)   if(!IsPlayerConnected(%0)) return %1
+#define PLAYER_ID_MUST_VALID(%0,%1)    if(%0 < 0 || %0 >= MAX_PLAYERS) return %1
