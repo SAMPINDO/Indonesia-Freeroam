@@ -1,6 +1,8 @@
 #include <a_mysql>
 
 #include <YSI_Coding\y_timers>
+#include <YSI_Coding\y_va>
+#include <YSI_Core\y_debug>
 #include <YSI_Extra\y_inline_bcrypt>
 #include <YSI_Extra\y_inline_mysql>
 #include <YSI_Visual\y_dialog>
@@ -35,6 +37,7 @@ Player_InitORM(playerid)
     ORM:orm = orm_create(ACCOUNTS_TABLE_NAME, g_Database)
   ;
 
+  PlayerData[playerid][ORM_ID] = orm;
   orm_addvar_int(orm, PlayerData[playerid][ID], "id");
   orm_addvar_string(orm, PlayerData[playerid][Username], MAX_PLAYER_NAME + 1, "username");
   orm_addvar_string(orm, PlayerData[playerid][Password], BCRYPT_HASH_LENGTH, "password");
@@ -65,16 +68,18 @@ void:Player_StartLoginTimeoutTimer(playerid)
   if (Timer_IsRunning(PlayerData[playerid][LoginTimer]))
 		stop PlayerData[playerid][LoginTimer];
 
-  defer Player_KickLoginTimeout(playerid);
+  PlayerData[playerid][LoginTimer] = defer Player_KickLoginTimeout(playerid);
   return 1;
 }
 
-static void:Player_ReleaseLock(playerid)
+Player_ReleaseLock(playerid)
 {
-  PLAYER_ID_MUST_VALID(playerid, 0);
+  if (playerid < 0 || playerid >= MAX_PLAYERS)
+    return 0;
 
   orm_destroy(PlayerData[playerid][ORM_ID]);
   PlayerData[playerid][ORM_ID] = MYSQL_INVALID_ORM;
+  return 1;
 }
 
 bool:Player_IsDataLocked(playerid)
@@ -86,7 +91,7 @@ bool:Player_IsDataLocked(playerid)
 
 bool:Player_IsRegistered(playerid)
 {
-  PLAYER_MUST_CONNECTED(playerid, 0);
+  PLAYER_MUST_CONNECTED(playerid, false);
 
   return (!!PlayerData[playerid][ID]);
 }
@@ -95,11 +100,8 @@ Player_InitGuestAccount(playerid)
 {
   PLAYER_ID_MUST_VALID(playerid, 0);
 
-  GetPlayerName(
-    playerid,
-    PlayerData[playerid][Username],
-    sizeof(PlayerData[playerid][Username])
-  );
+  PlayerData[playerid][ID] = 0;
+  GetPlayerName(playerid, PlayerData[playerid][Username], MAX_PLAYER_NAME);
 
   return 1;
 }
@@ -131,6 +133,8 @@ Player_SaveData(playerid, bool:release_lock = false)
     CallRemoteFunction("OnPlayerSaveAccountSuccess", "d", playerid);
     return 1;
   }
+
+  PlayerData[playerid][Money] = GetPlayerMoney(playerid);
 
   ORM_SaveInline(PlayerData[playerid][ORM_ID], using inline OnAfterSave);
   return 1;
@@ -194,9 +198,15 @@ Player_ShowRegisterDialog(playerid)
 
     inline const ReceiveHashedPassword(string:hashed[])
     {
-      format(PlayerData[playerid][Password], sizeof(PlayerData[playerid][Password]), "%s", hashed);
+      format(PlayerData[playerid][Password], BCRYPT_HASH_LENGTH, "%s", hashed);
 
-      CallRemoteFunction("OnPlayerRegisterSuccess", "d", playerid);
+      inline const InsertAccountSuccess()
+      {
+        PlayerData[playerid][ID] = cache_insert_id();
+        CallRemoteFunction("OnPlayerRegisterSuccess", "d", playerid);
+      }
+
+      ORM_SaveInline(PlayerData[playerid][ORM_ID], using inline InsertAccountSuccess);
       return 1;
     }
 
@@ -204,22 +214,30 @@ Player_ShowRegisterDialog(playerid)
     return 1;
   }
 
-  Dialog_ShowCallback(playerid, using inline ResponseRegisterDialog, DIALOG_STYLE_PASSWORD, "Register", "Please insert your password.", "Submit", "Cancel");
+  Dialog_ShowCallback(
+    playerid,
+    using inline ResponseRegisterDialog,
+    DIALOG_STYLE_PASSWORD,
+    "Register",
+    va_return(""WHITE"Username: "LAWN_GREEN"%s"WHITE"\nPlease insert your password.", PlayerData[playerid][Username]),
+    "Submit",
+    "Cancel"
+  );
   return 1;
 }
 
-Player_ChangeUsername(playerid, const string:new_name[])
-{
-  PLAYER_MUST_CONNECTED(playerid, 0);
+// Player_ChangeUsername(playerid, const string:new_name[])
+// {
+//   PLAYER_MUST_CONNECTED(playerid, 0);
 
-  if (Player_IsLoggedIn(playerid))
-		return 0;
+//   if (Player_IsLoggedIn(playerid))
+// 		return 0;
 
-  if (strlen(new_name) < 3 || strlen > MAX_PLAYER_NAME)
-    return 0;
+//   if (strlen(new_name) < 3 || strlen(new_name) > MAX_PLAYER_NAME)
+//     return 0;
 
-  return SetPlayerName(playerid, new_name);
-}
+//   return SetPlayerName(playerid, new_name);
+// }
 
 Player_MarkStartPlayTime(playerid)
 {
@@ -239,6 +257,13 @@ Player_UpdatePlayTime(playerid)
 
 void:Player_StopLoginTimeout(playerid)
 {
-	if (Timer_IsRunning(PlayerData[playerid][LoginTimeout]))
-		stop PlayerData[playerid][LoginTimeout];
+	stop PlayerData[playerid][LoginTimer];
+}
+
+void:Player_SaveAll()
+{
+  foreach(new playerid : Player)
+  {
+    Player_SaveData(playerid);
+  }
 }

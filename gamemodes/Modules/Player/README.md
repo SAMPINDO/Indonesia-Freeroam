@@ -11,7 +11,7 @@ OnPlayerRegisterSuccess(playerid) // called when registration of player's accoun
 
 OnPlayerLoginSuccess(playerid) // called when login success
 
-OnPlayerSaveAccountSuccess(playerid) // called when saving of player's account success
+OnPlayerSaveSuccess(playerid) // called when saving of player's account success
 ```
 
 ## Commands

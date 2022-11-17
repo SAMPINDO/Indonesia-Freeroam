@@ -11,7 +11,8 @@ static void:Player_PromptCredential(playerid)
   if (Player_IsRegistered(playerid))
   {
     SendClientMessage(playerid, X11_WHITE, "This username is registered. Please use "LAWN_GREEN"/login "WHITE"to verify your ownership.");
-    SendClientMessage(playerid, X11_WHITE, "In case you are need a new username, please use "LAWN_GREEN"/guest"WHITE" to change your current username.");
+    SendClientMessage(playerid, X11_WHITE, "In case you are need a new username, please reconnect with your new username for now.");
+    // SendClientMessage(playerid, X11_WHITE, "In case you are need a new username, please use "LAWN_GREEN"/guest"WHITE" to change your current username.");
   }
   else
   {
@@ -21,7 +22,7 @@ static void:Player_PromptCredential(playerid)
 
 static void:Player_CheckUsername(playerid)
 {
-  inline CheckUsername()
+  inline const CheckUsername()
   {
     if (cache_num_rows() == 0)
     {
@@ -39,11 +40,11 @@ static void:Player_CheckUsername(playerid)
     }
 
     Player_PromptCredential(playerid);
-		Player_StartLoginTimeoutTimer(playerid);
-		SendClientMessage(playerid, X11_WHITE, "You will be kicked from server in "LAWN_GREEN""LOGIN_TIMEOUT_DURATION_IN_SECONDS" seconds"WHITE" if you are not spawning.");
+    Player_StartLoginTimeoutTimer(playerid);
+    SendClientMessage(playerid, X11_WHITE, "You will be kicked from server in "LAWN_GREEN"60 seconds"WHITE" if you are not spawning.");
   }
 
-  if (!IsPlayerDataLocked(playerid))
+  if (!Player_IsDataLocked(playerid))
   {
     new
       string:name[MAX_PLAYER_NAME + 1]
@@ -56,9 +57,8 @@ static void:Player_CheckUsername(playerid)
       FROM \
         `"ACCOUNTS_TABLE_NAME"` \
       WHERE \
-        `username` = %e;\
+        `username` = \"%e\";\
     ", name);
-    return 1;
   }
 }
 
@@ -70,10 +70,10 @@ hook OnScriptInit()
   // Database
   PlayerData[MAX_PLAYERS][ORM_ID] = MYSQL_INVALID_ORM;
   PlayerData[MAX_PLAYERS][ID] = 0;
-  format(PlayerData[MAX_PLAYERS][Username], sizeof(PlayerData[MAX_PLAYERS][Username], ""));
-  format(PlayerData[MAX_PLAYERS][Password], sizeof(PlayerData[MAX_PLAYERS][Password], ""));
-  format(PlayerData[MAX_PLAYERS][Email], sizeof(PlayerData[MAX_PLAYERS][Email], ""));
-  format(PlayerData[MAX_PLAYERS][DiscordID], sizeof(PlayerData[MAX_PLAYERS][DiscordID], ""));
+  format(PlayerData[MAX_PLAYERS][Username], MAX_PLAYER_NAME + 1, "");
+  format(PlayerData[MAX_PLAYERS][Password], BCRYPT_HASH_LENGTH, "");
+  format(PlayerData[MAX_PLAYERS][Email], EMAIL_ADDRESS_LENGTH, "");
+  format(PlayerData[MAX_PLAYERS][DiscordID], DISCORD_ID_LENGTH, "");
   PlayerData[MAX_PLAYERS][DiscordBoundAt] = 0;
   PlayerData[MAX_PLAYERS][AdminLevel] = 0;
   PlayerData[MAX_PLAYERS][Money] = 0;
@@ -110,7 +110,9 @@ hook OnPlayerConnect(playerid)
 
   inline CheckLock()
   {
-    if (IsPlayerDataLocked(playerid))
+    PLAYER_MUST_CONNECTED(playerid, 1);
+
+    if (Player_IsDataLocked(playerid))
     {
       new
         string:text[30]
@@ -159,9 +161,9 @@ hook OnPlayerLoginSuccess(playerid)
 
   PLAYER_MUST_CONNECTED(playerid, 1);
 
-	Player_StopLoginTimeout(playerid);
+  Player_StopLoginTimeout(playerid);
   Player_MarkStartPlayTime(playerid);
-  va_SendClientMessage(playerid, X11_WHITE, "You are logged in. Welcome back, "LAWN_GREEN"%s"WHITE"!");
+  va_SendClientMessage(playerid, X11_WHITE, "You are logged in. Welcome back, "LAWN_GREEN"%s"WHITE"!", PlayerData[playerid][Username]);
   return 1;
 }
 
@@ -178,9 +180,10 @@ hook OnPlayerRegisterSuccess(playerid)
   return 1;
 }
 
-hook OnPlayerSaveAccountSuccess(playerid)
+#include <YSI_Coding\y_hooks>
+hook OnPlayerSaveSuccess(playerid)
 {
-  P:1(va_return("Player ID data (playerid=%d) saved successfully.", playerid));
+  // P:1(va_return("Player ID data (playerid=%d) saved successfully.", playerid));
   return 1;
 }
 
@@ -202,11 +205,9 @@ hook OnPlayerDisconnect(playerid, reason)
   #pragma unused reason
 
   if (!Player_IsLoggedIn(playerid))
-  {
-    return 1;
-  }
+    return Player_ReleaseLock(playerid);
 
-	Player_StopLoginTimeout(playerid);
+  Player_StopLoginTimeout(playerid);
   Player_UpdatePlayTime(playerid);
   Player_SaveData(playerid, true);
   return 1;

@@ -3,6 +3,8 @@
 #define LOGIN_TIMEOUT_DURATION_IN_SECONDS     (60)
 #define MAXIMUM_LOGIN_FAILED                  (3)
 
+#define ACCOUNTS_TABLE_NAME                   "accounts"
+
 
 
 enum E_PLAYER_DATA
