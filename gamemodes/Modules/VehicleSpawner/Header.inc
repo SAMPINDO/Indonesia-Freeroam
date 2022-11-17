@@ -20,3 +20,7 @@ new BlockedVehicle[] = {
     570,
     590
 };
+
+new
+    gLastSpawnedVehicle[MAX_PLAYERS] = INVALID_VEHICLE_ID
+;
