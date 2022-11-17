@@ -4,132 +4,137 @@ repo: Indonesia-Freeroam
 entry: gamemodes/Freeroam.pwn
 output: gamemodes/Freeroam.amx
 dependencies:
-    - pawn-lang/samp-stdlib
-    - Y-Less/sscanf:v2.13.2
-    - Sreyas-Sreelal/samp-bcrypt:0.3.4
-    - pBlueG/SA-MP-MySQL:R41-4
-    - pawn-lang/YSI-Includes@5.x
-    - Y-Less/samp-plugin-crashdetect:v4.22
-    - TommyB123/eSelection:1.1.1
+  - pawn-lang/samp-stdlib
+  - Y-Less/sscanf:v2.13.2
+  - Sreyas-Sreelal/samp-bcrypt:0.3.4
+  - pBlueG/SA-MP-MySQL:R41-4
+  - pawn-lang/YSI-Includes@5.x
+  - Y-Less/samp-plugin-crashdetect:v4.22
+  - TommyB123/eSelection:1.1.1
+  - AGraber/samp-compat:1.0.2
 local: true
 runtime:
+  version: 0.3.7
+  mode: server
+  rcon_password: password
+  port: 7777
+  hostname: SA-MP Server
+  maxplayers: 50
+  language: ""
+runtimes:
+  - name: dev
     version: 0.3.7
     mode: server
-    rcon_password: password
+    echo: Loading server development configuration...
+    gamemodes:
+      - Freeroam
+    rcon_password: notallowed
     port: 7777
-    hostname: SA-MP Server
-    maxplayers: 50
-    language: ""
-runtimes:
-    - name: dev
-      version: 0.3.7
-      mode: server
-      echo: Loading server development configuration...
-      gamemodes:
-        - Freeroam
-      rcon_password: notallowed
-      port: 7777
-      hostname: '[DEV] Indonesia Freeroam'
-      maxplayers: 10
-      language: Bahasa Indonesia / English
-      mapname: San Andreas
-      weburl: indo-freeroam.id
-      gamemodetext: I:FR
-      announce: false
-      lanmode: false
-      query: true
-      rcon: true
-      logqueries: false
-      sleep: 1
-      maxnpc: 10
-      stream_rate: 1000
-      stream_distance: 400
-      onfoot_rate: 30
-      incar_rate: 30
-      weapon_rate: 30
-      chatlogging: true
-      timestamp: true
-      logtimeformat: '[%d/%m/%Y %H:%M:%S]'
-      messageholelimit: 3000
-      messageslimit: 500
-      ackslimit: 5000
-      playertimeout: 10000
-      minconnectiontime: 0
-      lagcompmode: 1
-      connseedtime: 300000
-      db_logging: false
-      db_log_queries: false
-      conncookies: true
-      cookielogging: false
-      output: true
-      extra:
-        long_call_time: "0"
-    - name: live
-      version: 0.3.7
-      mode: server
-      echo: Loading server live configuration...
-      gamemodes:
-        - Freeroam
-      rcon_password: Tenary2307
-      port: 7777
-      hostname: Indonesia Freeroam | indo-freeroam.id
-      maxplayers: 200
-      language: Bahasa Indonesia / English
-      mapname: San Andreas
-      weburl: indo-freeroam.id
-      gamemodetext: I:FR
-      announce: false
-      lanmode: false
-      query: true
-      rcon: true
-      logqueries: false
-      sleep: 1
-      maxnpc: 10
-      stream_rate: 1000
-      stream_distance: 400
-      onfoot_rate: 30
-      incar_rate: 30
-      weapon_rate: 30
-      chatlogging: true
-      timestamp: true
-      logtimeformat: '[%d/%m/%Y %H:%M:%S]'
-      messageholelimit: 3000
-      messageslimit: 500
-      ackslimit: 5000
-      playertimeout: 10000
-      minconnectiontime: 1000
-      lagcompmode: 1
-      connseedtime: 300000
-      db_logging: false
-      db_log_queries: false
-      conncookies: true
-      cookielogging: false
-      output: true
-      extra:
-        long_call_time: "0"
+    hostname: '[DEV] Indonesia Freeroam'
+    maxplayers: 10
+    language: Bahasa Indonesia / English
+    mapname: San Andreas
+    weburl: indo-freeroam.id
+    gamemodetext: I:FR
+    announce: false
+    lanmode: false
+    query: true
+    rcon: true
+    logqueries: false
+    sleep: 1
+    maxnpc: 10
+    stream_rate: 1000
+    stream_distance: 400
+    onfoot_rate: 30
+    incar_rate: 30
+    weapon_rate: 30
+    chatlogging: true
+    timestamp: true
+    logtimeformat: '[%d/%m/%Y %H:%M:%S]'
+    messageholelimit: 3000
+    messageslimit: 500
+    ackslimit: 5000
+    playertimeout: 10000
+    minconnectiontime: 0
+    lagcompmode: 1
+    connseedtime: 300000
+    db_logging: false
+    db_log_queries: false
+    conncookies: true
+    cookielogging: false
+    output: true
+    extra:
+      long_call_time: "5000"
+  - name: live
+    version: 0.3.7
+    mode: server
+    echo: Loading server live configuration...
+    gamemodes:
+      - Freeroam
+    rcon_password: Tenary2307
+    port: 7777
+    hostname: Indonesia Freeroam | indo-freeroam.id
+    maxplayers: 200
+    language: Bahasa Indonesia / English
+    mapname: San Andreas
+    weburl: indo-freeroam.id
+    gamemodetext: I:FR
+    announce: false
+    lanmode: false
+    query: true
+    rcon: true
+    logqueries: false
+    sleep: 1
+    maxnpc: 10
+    stream_rate: 1000
+    stream_distance: 400
+    onfoot_rate: 30
+    incar_rate: 30
+    weapon_rate: 30
+    chatlogging: true
+    timestamp: true
+    logtimeformat: '[%d/%m/%Y %H:%M:%S]'
+    messageholelimit: 3000
+    messageslimit: 500
+    ackslimit: 5000
+    playertimeout: 10000
+    minconnectiontime: 1000
+    lagcompmode: 1
+    connseedtime: 300000
+    db_logging: false
+    db_log_queries: false
+    conncookies: true
+    cookielogging: false
+    output: true
+    extra:
+      long_call_time: "5000"
 builds:
-    - name: dev
-      version: 3.10.8
-      args:
-        - -;+
-        - -(+
-        - -d3
-        - -Z+
-      includes:
-        - ./custom-include
-      constants:
-        DEBUG_MODE: "1"
-        DEVELOPMENT: "1"
-        STRLIB_RETURN_SIZE: "1024"
-    - name: live
-      version: 3.10.8
-      args:
-        - -;+
-        - -(+
-        - -d0
-        - -O1
-        - -Z+
-      includes:
-        - ./custom-include
-      constants:
-        STRLIB_RETURN_SIZE: "1024"
+  - name: dev
+    version: 3.10.8
+    args:
+      - -;+
+      - -(+
+      - -d3
+      - -Z+
+    includes:
+      - ./custom-include
+    constants:
+      # _DEBUG: "7" # For YSI debugging stuffs
+      DEBUG_MODE: "1"
+      DEVELOPMENT: "1"
+      STRLIB_RETURN_SIZE: "1024"
+      # YSI_YES_HEAP_MALLOC: "1"
+      YSI_NO_HEAP_MALLOC: "1"
+  - name: live
+    version: 3.10.8
+    args:
+      - -;+
+      - -(+
+      - -d0
+      - -O1
+      - -Z+
+    includes:
+      - ./custom-include
+    constants:
+      STRLIB_RETURN_SIZE: "1024"
+      YSI_NO_HEAP_MALLOC: "1"
