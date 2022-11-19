@@ -16,3 +16,5 @@
 #define PLAYER_IS_NOT_NPC(%0,%1)       if(IsPlayerNPC(%0)) return %1
 #define PLAYER_MUST_CONNECTED(%0,%1)   if(!IsPlayerConnected(%0)) return %1
 #define PLAYER_ID_MUST_VALID(%0,%1)    if(%0 < 0 || %0 >= MAX_PLAYERS) return %1
+
+#define RandomEx(%0,%1) random((%1 - %0 + 1)) + %0

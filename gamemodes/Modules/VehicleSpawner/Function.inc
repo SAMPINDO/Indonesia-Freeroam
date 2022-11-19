@@ -14,8 +14,9 @@ stock SpawnVehicle(playerid, modelid)
     if(gLastSpawnedVehicle[playerid] != INVALID_VEHICLE_ID)
     {
         DestroyVehicle(gLastSpawnedVehicle[playerid]); // Destroy the last spawned vehicle
+        gLastSpawnedVehicle[playerid] = INVALID_VEHICLE_ID; // Prevent Valid VehicleID
     }
-    gLastSpawnedVehicle[playerid] = CreateVehicle(modelid, x, y, z, a, 0, 0, 0);
+    gLastSpawnedVehicle[playerid] = CreateVehicle(modelid, x, y, z, a, RandomEx(0, 255), RandomEx(0, 255), -1, false); // Use CreateVehicle to Prevent Spawning Train
     SetVehicleVirtualWorld(gLastSpawnedVehicle[playerid], GetPlayerVirtualWorld(playerid));
     LinkVehicleToInterior(gLastSpawnedVehicle[playerid], GetPlayerInterior(playerid));
     PutPlayerInVehicle(playerid, gLastSpawnedVehicle[playerid], 0);
@@ -35,7 +36,7 @@ Saloons
 SportsVehicles
 Trailers
 UniqueVehicles
- */
+**/
 
 stock ShowVehicleTypeDialog(playerid)
 {

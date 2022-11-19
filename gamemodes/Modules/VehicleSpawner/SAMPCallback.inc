@@ -58,5 +58,6 @@ hook OnPlayerDisconnect(playerid, reason)
 
     // Must be destroyed the vehicle if player's owner is disconnected
     DestroyVehicle(gLastSpawnedVehicle[playerid]);
+    gLastSpawnedVehicle[playerid] = INVALID_VEHICLE_ID;
     return 1;
 }
