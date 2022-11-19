@@ -127,7 +127,7 @@ Player_SaveData(playerid, bool:release_lock = false)
     {
         if (release_lock)
         {
-        Player_ReleaseLock(playerid);
+            Player_ReleaseLock(playerid);
         }
 
         CallRemoteFunction("OnPlayerSaveAccountSuccess", "d", playerid);
@@ -153,23 +153,23 @@ Player_ShowLoginDialog(playerid)
 
         if (!response)
         {
-        return 1;
+            return 1;
         }
 
         inline const CheckPassword(success)
         {
-        if (!success)
-        {
-            PlayerData[playerid][LoginAttempt]++;
-            CallRemoteFunction("OnPlayerAttemptLogin", "dd", playerid, PlayerData[playerid][LoginAttempt]);
+            if (!success)
+            {
+                PlayerData[playerid][LoginAttempt]++;
+                CallRemoteFunction("OnPlayerAttemptLogin", "dd", playerid, PlayerData[playerid][LoginAttempt]);
+                return 1;
+            }
+
+            PlayerData[playerid][LoginAttempt] = 0;
+            PlayerData[playerid][IsLoggedIn] = true;
+
+            CallRemoteFunction("OnPlayerLoginSuccess", "d", playerid);
             return 1;
-        }
-
-        PlayerData[playerid][LoginAttempt] = 0;
-        PlayerData[playerid][IsLoggedIn] = true;
-
-        CallRemoteFunction("OnPlayerLoginSuccess", "d", playerid);
-        return 1;
         }
 
         BCrypt_CheckInline(inputtext, PlayerData[playerid][Password], using inline CheckPassword);
@@ -193,21 +193,21 @@ Player_ShowRegisterDialog(playerid)
 
         if (!response)
         {
-        return 1;
+            return 1;
         }
 
         inline const ReceiveHashedPassword(string:hashed[])
         {
-        format(PlayerData[playerid][Password], BCRYPT_HASH_LENGTH, "%s", hashed);
+            format(PlayerData[playerid][Password], BCRYPT_HASH_LENGTH, "%s", hashed);
 
-        inline const InsertAccountSuccess()
-        {
-            PlayerData[playerid][ID] = cache_insert_id();
-            CallRemoteFunction("OnPlayerRegisterSuccess", "d", playerid);
-        }
+            inline const InsertAccountSuccess()
+            {
+                PlayerData[playerid][ID] = cache_insert_id();
+                CallRemoteFunction("OnPlayerRegisterSuccess", "d", playerid);
+            }
 
-        ORM_SaveInline(PlayerData[playerid][ORM_ID], using inline InsertAccountSuccess);
-        return 1;
+            ORM_SaveInline(PlayerData[playerid][ORM_ID], using inline InsertAccountSuccess);
+            return 1;
         }
 
         BCrypt_HashInline(inputtext, BCRYPT_COST, using inline ReceiveHashedPassword);

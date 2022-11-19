@@ -26,17 +26,17 @@ static void:Player_CheckUsername(playerid)
     {
         if (cache_num_rows() == 0)
         {
-        Player_ResetData(playerid);
-        Player_InitORM(playerid);
-        Player_InitGuestAccount(playerid);
+            Player_ResetData(playerid);
+            Player_InitORM(playerid);
+            Player_InitGuestAccount(playerid);
         }
         else
         {
-        Player_ResetData(playerid);
-        Player_InitORM(playerid);
+            Player_ResetData(playerid);
+            Player_InitORM(playerid);
 
-        cache_get_value_name_int(0, "id", PlayerData[playerid][ID]);
-        Player_LoadAccount(playerid);
+            cache_get_value_name_int(0, "id", PlayerData[playerid][ID]);
+            Player_LoadAccount(playerid);
         }
 
         Player_PromptCredential(playerid);
@@ -47,7 +47,7 @@ static void:Player_CheckUsername(playerid)
     if (!Player_IsDataLocked(playerid))
     {
         new
-        string:name[MAX_PLAYER_NAME + 1]
+            string:name[MAX_PLAYER_NAME + 1]
         ;
 
         GetPlayerName(playerid, name, sizeof(name));
@@ -114,16 +114,16 @@ hook OnPlayerConnect(playerid)
 
         if (Player_IsDataLocked(playerid))
         {
-        new
-            string:text[30]
-        ;
+            new
+                string:text[30]
+            ;
 
-        format(text, sizeof(text), "~w~Please wait... (~r~%d~w~)", count);
-        GameTextForPlayer(playerid, text, 1500, 3);
+            format(text, sizeof(text), "~w~Please wait... (~r~%d~w~)", count);
+            GameTextForPlayer(playerid, text, 1500, 3);
 
-        count++;
-        Timer_CreateCallback(using inline CheckLock, 1_000, 1);
-        return 1;
+            count++;
+            Timer_CreateCallback(using inline CheckLock, 1_000, 1);
+            return 1;
         }
 
         Player_CheckUsername(playerid);
