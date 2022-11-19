@@ -223,7 +223,7 @@ Player_ShowRegisterDialog(playerid)
         "Submit",
         "Cancel"
     );
-return 1;
+    return 1;
 }
 
 // Player_ChangeUsername(playerid, const string:new_name[])
