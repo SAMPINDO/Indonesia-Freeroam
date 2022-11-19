@@ -9,36 +9,36 @@
 
 enum E_PLAYER_DATA
 {
-  // Database
-  ORM:ORM_ID,
-  ID,
-  string:Username[MAX_PLAYER_NAME + 1],
-  string:Password[BCRYPT_HASH_LENGTH],
-  string:Email[EMAIL_ADDRESS_LENGTH],
-  string:DiscordID[DISCORD_ID_LENGTH],
-  DiscordBoundAt,
-  AdminLevel,
-  Money,
-  Bank,
-  Level,
-  EXP,
-  Kills,
-  Deaths,
-  ModelSkinID,
-  PlayTime,
-  VIPLevel,
-  VIPExpiredAt,
-  RegisteredAt,
-  CreatedAt,
-  UpdatedAt,
+    // Database
+    ORM:ORM_ID,
+    ID,
+    string:Username[MAX_PLAYER_NAME + 1],
+    string:Password[BCRYPT_HASH_LENGTH],
+    string:Email[EMAIL_ADDRESS_LENGTH],
+    string:DiscordID[DISCORD_ID_LENGTH],
+    DiscordBoundAt,
+    AdminLevel,
+    Money,
+    Bank,
+    Level,
+    EXP,
+    Kills,
+    Deaths,
+    ModelSkinID,
+    PlayTime,
+    VIPLevel,
+    VIPExpiredAt,
+    RegisteredAt,
+    CreatedAt,
+    UpdatedAt,
 
-  // In-game
-  bool:IsLoggedIn,
-  PlayTimeStart,
-  LoginAttempt,
-  Timer:LoginTimer
+    // In-game
+    bool:IsLoggedIn,
+    PlayTimeStart,
+    LoginAttempt,
+    Timer:LoginTimer
 };
 
 new
-  PlayerData[MAX_PLAYERS + 1][E_PLAYER_DATA]
+    PlayerData[MAX_PLAYERS + 1][E_PLAYER_DATA]
 ;

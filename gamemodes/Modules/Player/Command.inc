@@ -5,38 +5,38 @@
 
 YCMD:login(playerid, params[], help)
 {
-  #pragma unused params
+    #pragma unused params
 
-  if (Player_IsLoggedIn(playerid))
-    return SendClientMessage(playerid, X11_TOMATO, "You are already logged in.");
+    if (Player_IsLoggedIn(playerid))
+        return SendClientMessage(playerid, X11_TOMATO, "You are already logged in.");
 
-  if (help)
-  {
-    SendClientMessage(playerid, X11_WHITE, "USAGE: /login");
-    SendClientMessage(playerid, X11_WHITE, "USAGE: Log in to account.");
+    if (help)
+    {
+        SendClientMessage(playerid, X11_WHITE, "USAGE: /login");
+        SendClientMessage(playerid, X11_WHITE, "USAGE: Log in to account.");
+        return 1;
+    }
+
+    Player_ShowLoginDialog(playerid);
     return 1;
-  }
+    }
 
-  Player_ShowLoginDialog(playerid);
-  return 1;
-}
+    YCMD:register(playerid, params[], help)
+    {
+    #pragma unused params
 
-YCMD:register(playerid, params[], help)
-{
-  #pragma unused params
+    if (Player_IsLoggedIn(playerid))
+        return SendClientMessage(playerid, X11_TOMATO, "You are already logged in.");
 
-  if (Player_IsLoggedIn(playerid))
-    return SendClientMessage(playerid, X11_TOMATO, "You are already logged in.");
+    if (help)
+    {
+        SendClientMessage(playerid, X11_WHITE, "USAGE: /register");
+        SendClientMessage(playerid, X11_WHITE, "USAGE: Register your current username.");
+        return 1;
+    }
 
-  if (help)
-  {
-    SendClientMessage(playerid, X11_WHITE, "USAGE: /register");
-    SendClientMessage(playerid, X11_WHITE, "USAGE: Register your current username.");
+    Player_ShowRegisterDialog(playerid);
     return 1;
-  }
-
-  Player_ShowRegisterDialog(playerid);
-  return 1;
 }
 
 // TODO: Still need to check if username from input is already registered.
