@@ -27,7 +27,7 @@
 
 #include "Modules/Wrapper"
 
-main() { Command_SetDeniedReturn(true); } // Pake gamemodeinit aja
+main() { } // Pake gamemodeinit aja
 
 public OnGameModeInit() 
 {
@@ -51,8 +51,9 @@ public OnGameModeInit()
 	ShowNameTags(1);
 	UsePlayerPedAnims();
 	DisableInteriorEnterExits();
-	SetNameTagDrawDistance(40.0);
+	SetNameTagDrawDistance(50.0);
 	EnableStuntBonusForAll(false);
+	Command_SetDeniedReturn(true);
 
 	AddPlayerClass(299,1956.2833,1342.9930,15.3746,270.1634,0,0,0,0,0,0);
 	return 1;
@@ -133,11 +134,11 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
   
         if (dist < 3)
         {
-            SendClientMessageEx(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!, apakah \"%s\"?", cmdtext, guessCmd);
+            va_SendClientMessage(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!, apakah \"%s\"?", cmdtext, guessCmd);
         }
         else
         {
-            SendClientMessageEx(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!", cmdtext);
+            va_SendClientMessage(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!", cmdtext);
         }
         return COMMAND_DENIED;
     }
