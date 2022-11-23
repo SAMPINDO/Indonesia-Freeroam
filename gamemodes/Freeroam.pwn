@@ -1,5 +1,4 @@
 #pragma dynamic 		8388608 // 8MB
-#define YSI_NO_HEAP_MALLOC // Remove Heap MALLOC 
 
 
 #define SERVER_NAME			"Indonesia Freeroam"
@@ -28,7 +27,7 @@
 
 #include "Modules/Wrapper"
 
-main() { Command_SetDeniedReturn(true); } // Pake gamemodeinit aja
+main() { } // Pake gamemodeinit aja
 
 public OnGameModeInit() 
 {
@@ -37,20 +36,24 @@ public OnGameModeInit()
 	print("--------------------------------------");
 	SetGameModeText(MODE_VERSION);
 	
+	#if DEBUG_MODE then
+		mysql_log(ALL);
+	#endif
 	g_Database = mysql_connect_file("mysql.ini");
 
 	if(g_Database == MYSQL_INVALID_HANDLE)
-    {
-        print("[error] Failed to connect to database!");
-        SendRconCommand("exit");
+	{
+		print("[error] Failed to connect to database!");
+		SendRconCommand("exit");
 		return 1;
-    }
+	}
 
 	ShowNameTags(1);
 	UsePlayerPedAnims();
 	DisableInteriorEnterExits();
-	SetNameTagDrawDistance(40.0);
+	SetNameTagDrawDistance(50.0);
 	EnableStuntBonusForAll(false);
+	Command_SetDeniedReturn(true);
 
 	AddPlayerClass(299,1956.2833,1342.9930,15.3746,270.1634,0,0,0,0,0,0);
 	return 1;
@@ -58,14 +61,14 @@ public OnGameModeInit()
 
 public OnPlayerText(playerid, text[])
 {
- 	return 1;
+	return 1;
 }
 
 public OnGameModeExit()
 {
 	if(g_Database != MYSQL_INVALID_HANDLE)
 	{
-		SavePlayers(); // Save Player Data When Database Is Connected and Server Is Shutting Down
+		Player_SaveAll(); // Save Player Data When Database Is Connected and Server Is Shutting Down
 	}
 	mysql_close(g_Database);
 	return 1;
@@ -131,11 +134,11 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
   
         if (dist < 3)
         {
-            SendClientMessageEx(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!, apakah \"%s\"?", cmdtext, guessCmd);
+            va_SendClientMessage(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!, apakah \"%s\"?", cmdtext, guessCmd);
         }
         else
         {
-            SendClientMessageEx(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!", cmdtext);
+            va_SendClientMessage(playerid, -1, "{B9C9BF}SERVER: "WHITE"\"%s\"{B9C9BF} tidak di temukan!", cmdtext);
         }
         return COMMAND_DENIED;
     }

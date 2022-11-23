@@ -294,7 +294,7 @@ stock mS_UpdatePageTextDraw(playerid)
 
 //------------------------------------------------
 
-stock ShowModelSelectionMenu(playerid, ListID, header_text[], dialogBGcolor = 0x4A5A6BBB, previewBGcolor = 0x88888899 , tdSelectionColor = 0xFFFF00AA)
+stock ShowModelSelectionMenu(playerid, ListID, const header_text[], dialogBGcolor = 0x4A5A6BBB, previewBGcolor = 0x88888899 , tdSelectionColor = 0xFFFF00AA)
 {
 	if(!(0 <= ListID < mS_TOTAL_LISTS && gLists[ListID][mS_LIST_START] != gLists[ListID][mS_LIST_END])) return 0;
 	mS_DestroySelectionMenu(playerid);
@@ -591,7 +591,7 @@ forward MP_OPCPTD(playerid, PlayerText:playertextid);
 //------------------------------------------------------------------
 
 
-stock LoadModelSelectionMenu(f_name[])
+stock LoadModelSelectionMenu(const f_name[])
 {
 	new File:f, str[75];
 	format(str, sizeof(str), "%s", f_name);

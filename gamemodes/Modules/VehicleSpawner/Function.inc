@@ -11,14 +11,15 @@ stock SpawnVehicle(playerid, modelid)
         GetPlayerPos(playerid, x, y, z);
         GetPlayerFacingAngle(playerid, a);
     }
-    if(PlayerData[playerid][pLastSpawnedVehicle] != INVALID_VEHICLE_ID)
+    if(gLastSpawnedVehicle[playerid] != INVALID_VEHICLE_ID)
     {
-        DestroyVehicle(PlayerData[playerid][pLastSpawnedVehicle]); // Destroy the last spawned vehicle
+        DestroyVehicle(gLastSpawnedVehicle[playerid]); // Destroy the last spawned vehicle
+        gLastSpawnedVehicle[playerid] = INVALID_VEHICLE_ID; // Prevent Valid VehicleID
     }
-    PlayerData[playerid][pLastSpawnedVehicle] = CreateVehicle(modelid, x, y, z, a, 0, 0, 0);
-    SetVehicleVirtualWorld(PlayerData[playerid][pLastSpawnedVehicle], GetPlayerVirtualWorld(playerid));
-    LinkVehicleToInterior(PlayerData[playerid][pLastSpawnedVehicle], GetPlayerInterior(playerid));
-    PutPlayerInVehicle(playerid, PlayerData[playerid][pLastSpawnedVehicle], 0);
+    gLastSpawnedVehicle[playerid] = CreateVehicle(modelid, x, y, z, a, RandomEx(0, 255), RandomEx(0, 255), -1, false); // Use CreateVehicle to Prevent Spawning Train
+    SetVehicleVirtualWorld(gLastSpawnedVehicle[playerid], GetPlayerVirtualWorld(playerid));
+    LinkVehicleToInterior(gLastSpawnedVehicle[playerid], GetPlayerInterior(playerid));
+    PutPlayerInVehicle(playerid, gLastSpawnedVehicle[playerid], 0);
     return 1;
 }
 
@@ -35,13 +36,13 @@ Saloons
 SportsVehicles
 Trailers
 UniqueVehicles
- */
+**/
 
 stock ShowVehicleTypeDialog(playerid)
 {
     inline Response(pid, dialogid, response, listitem, string:inputtext[])
     {
-	    #pragma unused dialogid, inputtext, pid
+        #pragma unused dialogid, inputtext, pid
         if(response)
         {
             switch(listitem)
