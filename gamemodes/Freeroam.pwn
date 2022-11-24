@@ -22,6 +22,7 @@
 #include <scg>
 #include <easyDialog>
 #include <mSelection>
+#include <strlib>
 
 #include "Utils/Macro"
 
@@ -81,13 +82,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
-	forex(i,20)
-	{
-		SendClientMessage(playerid,X11_WHITE," ");
-	}
-	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE"Welcome to"CYAN" "SERVER_NAME);
-	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE" use "YELLOW"/help "WHITE"to view all server commands!");
-	SendDeathMessage(INVALID_PLAYER_ID,playerid,200);
+	//SendDeathMessage(INVALID_PLAYER_ID,playerid,200);
     return 1;
 }
 
@@ -99,8 +94,15 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerSpawn(playerid)
 {
+	forex(i,20)
+	{
+		SendClientMessage(playerid,X11_WHITE," ");
+	}
+	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE"Welcome to"CYAN" "SERVER_NAME);
+	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE" use "YELLOW"/help "WHITE"to view all server commands!");
 	ResetPlayerMoney(playerid);
 	GivePlayerMoney(playerid,9999999);
+	RandomWeaponSpawn(playerid);
     return 1;
 }
 
