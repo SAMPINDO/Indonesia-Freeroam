@@ -71,9 +71,6 @@ stock RandomWeaponSpawn(playerid)
     {
         case 0:
         {
-            if(weaponSelected[playerid][0] == 1)
-                return SEM(playerid, "Selected ini sudah anda pilih sebelumnya");
-
             ResetPlayerWeapons(playerid);
             GivePlayerWeaponEx(playerid, 16, 1500);
             GivePlayerWeaponEx(playerid, 24, 1500);
@@ -85,10 +82,7 @@ stock RandomWeaponSpawn(playerid)
             weaponSelected[playerid][2] = 0;
         }
         case 1:
-        {
-            if(weaponSelected[playerid][1] == 1)
-                return SEM(playerid, "Selected ini sudah anda pilih sebelumnya");
-                        
+        {            
             ResetPlayerWeapons(playerid);
             GivePlayerWeaponEx(playerid, 17, 1500);
             GivePlayerWeaponEx(playerid, 23, 1500);
@@ -100,10 +94,7 @@ stock RandomWeaponSpawn(playerid)
             weaponSelected[playerid][2] = 0;
         }
         case 2:
-        {
-            if(weaponSelected[playerid][2] == 1)
-                return SEM(playerid, "Selected ini sudah anda pilih sebelumnya");
-                        
+        {         
             ResetPlayerWeapons(playerid);
             GivePlayerWeaponEx(playerid, 18, 1500);
             GivePlayerWeaponEx(playerid, 24, 1500);
