@@ -82,7 +82,12 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
-	//SendDeathMessage(INVALID_PLAYER_ID,playerid,200);
+	forex(i,20)
+	{
+		SendClientMessage(playerid,X11_WHITE," ");
+	}
+	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE"Welcome to"CYAN" "SERVER_NAME);
+	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE" use "YELLOW"/help "WHITE"to view all server commands!");
     return 1;
 }
 
@@ -94,12 +99,6 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerSpawn(playerid)
 {
-	forex(i,20)
-	{
-		SendClientMessage(playerid,X11_WHITE," ");
-	}
-	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE"Welcome to"CYAN" "SERVER_NAME);
-	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE" use "YELLOW"/help "WHITE"to view all server commands!");
 	ResetPlayerMoney(playerid);
 	GivePlayerMoney(playerid,9999999);
 	RandomWeaponSpawn(playerid);
