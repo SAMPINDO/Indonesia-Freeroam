@@ -22,7 +22,6 @@
 #include <scg>
 #include <easyDialog>
 #include <mSelection>
-#include <strlib>
 
 #include "Utils/Macro"
 

@@ -15,5 +15,5 @@ YCMD:w(playerid, params[], help)
             return SEM(playerid, "Weapon ini tidak bisa di spawn.");
     }
 
-    return GivePlayerWeaponEx(playerid, weapon, 2000);
+    return GivePlayerWeapon(playerid, weapon, 2000);
 }
