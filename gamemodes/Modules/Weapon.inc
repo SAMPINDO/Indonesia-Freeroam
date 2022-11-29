@@ -1,0 +1,5 @@
+#include "Modules/Weapon/Header"
+#include "Modules/Weapon/Function"
+#include "Modules/Weapon/SAMPCallback"
+#include "Modules/Weapon/Command"
+#include "Modules/Weapon/Alias"

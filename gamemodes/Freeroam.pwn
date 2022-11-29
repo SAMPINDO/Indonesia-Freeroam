@@ -87,7 +87,6 @@ public OnPlayerConnect(playerid)
 	}
 	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE"Welcome to"CYAN" "SERVER_NAME);
 	SendClientMessage(playerid, X11_LIGHTBLUE, "SERVER: "WHITE" use "YELLOW"/help "WHITE"to view all server commands!");
-	SendDeathMessage(INVALID_PLAYER_ID,playerid,200);
     return 1;
 }
 
@@ -101,6 +100,7 @@ public OnPlayerSpawn(playerid)
 {
 	ResetPlayerMoney(playerid);
 	GivePlayerMoney(playerid,9999999);
+	RandomWeaponSpawn(playerid);
     return 1;
 }
 
