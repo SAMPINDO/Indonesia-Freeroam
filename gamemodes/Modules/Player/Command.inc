@@ -21,8 +21,8 @@ YCMD:login(playerid, params[], help)
     return 1;
     }
 
-    YCMD:register(playerid, params[], help)
-    {
+YCMD:register(playerid, params[], help)
+{
     #pragma unused params
 
     if (Player_IsLoggedIn(playerid))
@@ -36,6 +36,34 @@ YCMD:login(playerid, params[], help)
     }
 
     Player_ShowRegisterDialog(playerid);
+    return 1;
+}
+
+YCMD:godmode(playerid, params[], help)
+{
+    #pragma unused params
+
+    if (!Player_IsLoggedIn(playerid))
+        return SendClientMessage(playerid, X11_TOMATO, "You are not logged in.");
+
+    if (help)
+    {
+        SendClientMessage(playerid, X11_WHITE, "USAGE: /godmode");
+        SendClientMessage(playerid, X11_WHITE, "USAGE: Enable god mode (infinite health & vehicle)");
+        return 1;
+    }
+
+    if (Player_IsGodModeEnabled(playerid))
+    {
+        Player_DisableGodMode(playerid);
+        SendClientMessage(playerid, X11_WHITE, "God mode "TOMATO"disabled"WHITE".");
+    }
+    else
+    {
+        Player_EnableGodMode(playerid);
+        SendClientMessage(playerid, X11_WHITE, "God mode "LAWN_GREEN"enabled"WHITE".");
+    }
+
     return 1;
 }
 

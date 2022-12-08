@@ -12,6 +12,10 @@ OnPlayerRegisterSuccess(playerid) // called when registration of player's accoun
 OnPlayerLoginSuccess(playerid) // called when login success
 
 OnPlayerSaveSuccess(playerid) // called when saving of player's account success
+
+OnPlayerGodModeEnabled(playerid) // called when player enables god mode
+
+OnPlayerGodModeDisabled(playerid) // called when player disables god mode
 ```
 
 ## Commands
@@ -25,6 +29,9 @@ OnPlayerSaveSuccess(playerid) // called when saving of player's account success
 
 - /guest [username]
 >> Switch current username to new username for register. (3 - 24 characters)
+
+- /godmode
+>> Toggle god mode.
 ```
 
 ## Functions
@@ -55,4 +62,14 @@ Player_ShowLoginDialog(playerid);
 Player_ShowRegisterDialog(playerid);
 
 Player_ChangeUsername(playerid, const string:new_name[]);
+
+bool:Player_IsGodModeEnabled(playerid);
+
+Player_StopGodModeTimer(playerid);
+
+Player_StartGodModeTimer(playerid);
+
+Player_EnableGodMode(playerid);
+
+Player_DisableGodMode(playerid);
 ```

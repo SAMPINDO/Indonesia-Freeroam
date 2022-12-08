@@ -16,6 +16,60 @@ bool:Player_IsLoggedIn(playerid)
     return (PlayerData[playerid][IsLoggedIn]);
 }
 
+Player_StopGodModeTimer(playerid)
+{
+    PLAYER_ID_MUST_VALID(playerid, 0);
+
+    stop PlayerData[playerid][GodModeBenefitTimer];
+    PlayerData[playerid][GodModeBenefitTimer] = Timer:0;
+    PlayerData[playerid][IsGodModeEnabled] = false;
+
+    return 1;
+}
+
+Player_StartGodModeTimer(playerid)
+{
+    PLAYER_ID_MUST_VALID(playerid, 0);
+
+    if (Timer_IsRunning(PlayerData[playerid][GodModeBenefitTimer]))
+    {
+        return 1;
+    }
+
+    PlayerData[playerid][IsGodModeEnabled] = true;
+    PlayerData[playerid][GodModeBenefitTimer] = repeat Player_RegainGodModeBenefit(playerid);
+
+    return 1;
+}
+
+bool:Player_IsGodModeEnabled(playerid)
+{
+    PLAYER_ID_MUST_VALID(playerid, false);
+    return (PlayerData[playerid][IsGodModeEnabled]);
+}
+
+Player_EnableGodMode(playerid)
+{
+    PLAYER_ID_MUST_VALID(playerid, false);
+
+    Player_StartGodModeTimer(playerid);
+    SetPlayerHealth(playerid, 1_000_000.0);
+
+    CallRemoteFunction("OnPlayerGodModeEnabled", "d", playerid);
+    return 1;
+}
+
+Player_DisableGodMode(playerid)
+{
+    PLAYER_ID_MUST_VALID(playerid, false);
+
+    Player_StopGodModeTimer(playerid);
+    SetPlayerHealth(playerid, 100.0);
+
+    CallRemoteFunction("OnPlayerGodModeDisabled", "d", playerid);
+    return 1;
+}
+
 Player_ResetData(playerid)
 {
     PLAYER_ID_MUST_VALID(playerid, 0);
