@@ -36,7 +36,12 @@ enum E_PLAYER_DATA
     bool:IsLoggedIn,
     PlayTimeStart,
     LoginAttempt,
-    Timer:LoginTimer
+    Timer:LoginTimer,
+    // God mode
+    Timer:GodModeBenefitTimer,
+    bool:IsGodModeEnabled,
+    bool:IsAllowedToUseGodMode,
+    LastVehicleID
 };
 
 new

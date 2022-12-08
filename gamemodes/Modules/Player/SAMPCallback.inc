@@ -94,6 +94,12 @@ hook OnScriptInit()
     PlayerData[MAX_PLAYERS][IsLoggedIn] = false;
     PlayerData[MAX_PLAYERS][PlayTimeStart] = 0;
     PlayerData[MAX_PLAYERS][LoginAttempt] = 0;
+
+    // God mode
+    PlayerData[MAX_PLAYERS][GodModeBenefitTimer] = Timer:0;
+    PlayerData[MAX_PLAYERS][IsGodModeEnabled] = false;
+    PlayerData[MAX_PLAYERS][IsAllowedToUseGodMode] = false;
+    PlayerData[MAX_PLAYERS][LastVehicleID] = 0;
     return 1;
 }
 
@@ -103,6 +109,8 @@ hook OnPlayerConnect(playerid)
     PLAYER_IS_NOT_NPC(playerid, 1);
 
     PLAYER_MUST_CONNECTED(playerid, 1);
+
+    Player_StopGodModeTimer(playerid);
 
     new
         count = 1
@@ -208,7 +216,24 @@ hook OnPlayerDisconnect(playerid, reason)
         return Player_ReleaseLock(playerid);
 
     Player_StopLoginTimeout(playerid);
+    Player_StopGodModeTimer(playerid);
     Player_UpdatePlayTime(playerid);
     Player_SaveData(playerid, true);
+    return 1;
+}
+
+#include <YSI_Coding\y_hooks>
+hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
+{
+    #pragma unused fX, fY, fZ
+    if (hittype == BULLET_HIT_TYPE_PLAYER)
+    {
+        if (Player_IsGodModeEnabled(hitid))
+        {
+            va_GameTextForPlayer(playerid, "This player (Player ID: %d) is using god mode!", 3_000, 4, hitid);
+            return 0;
+        }
+    }
+
     return 1;
 }
